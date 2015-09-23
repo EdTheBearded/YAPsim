@@ -9,6 +9,7 @@
 #define __IU_H__
 
 #include "systemc.h"
+#include "../memory/memory.h"
 
 typedef struct {
 	uint32_t 	PC;
@@ -70,13 +71,24 @@ typedef struct {
 
 SC_MODULE(iu){
 
-	iu();
-
 	sc_in<bool> clk;
+
+	iu(int _regFileSize, memory *_mem);
 
 	void iu_comb(void);
 
 	void iu_sync(void);
+
+private:
+
+	memory *mem;
+	pipeline_t p, np;
+	int regFileSize;
+	uint32_t *regFile;
+	uint32_t PC;
+	uint32_t statusReg;
+	uint32_t LowReg, HighReg;
+
 
 };
 
